@@ -55,6 +55,8 @@ public class Main {
             String fullString = instance.doOCR(questionImage).replaceAll("ﬁ", "fi");
             String questionString = (fullString.split("\\?")[0] + "?").replaceAll("\n", " ");
             System.out.println("Question: " + questionString);
+
+
             String[] answerStrings = fullString.split("\\?")[1].split("\n");
 
             String[] answerStringsConcated = new String[3];
