@@ -1,7 +1,5 @@
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
-import com.gargoylesoftware.htmlunit.html.HtmlHeading1;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.textrazor.AnalysisException;
 import com.textrazor.TextRazor;
@@ -46,7 +44,7 @@ public class Main {
         }
     }
 
-    public static void search() throws IOException, AWTException {
+    private static void search() throws IOException, AWTException {
         BufferedImage question = new Robot().createScreenCapture(new Rectangle(10, 300, 700, 975));
         ImageIO.write(question, "png", new File("question.png"));
 
@@ -79,13 +77,6 @@ public class Main {
             WordNetDatabase database = WordNetDatabase.getFileInstance();
             Synset[][] synsets = {database.getSynsets(answerStringsConcated[0]), database.getSynsets(answerStringsConcated[1]), database.getSynsets(answerStringsConcated[2])};
 
-            for (Synset[] synset : synsets) {
-                System.out.print("Synonyms: ");
-                for (Synset s : synset) {
-                    System.out.println(s);
-                }
-            }
-
             //Do some text analysis
             TextRazor client = new TextRazor("6d663ab2029c17f58afbba07ddc3c1231bb7483f22145cef788719d4");
 
@@ -93,10 +84,12 @@ public class Main {
             client.addExtractor("entities");
 
             AnalyzedText questionEntities = client.analyze(questionString);
-            for (Entity entity : questionEntities.getResponse().getEntities()) {
-                System.out.println("Entity: " + entity.getEntityId());
-                System.out.println("Relevance: " + entity.getRelevanceScore());
-                System.out.println("Confidence: " + entity.getConfidenceScore());
+            if(questionEntities.getResponse().getEntities() != null) {
+                for (Entity entity : questionEntities.getResponse().getEntities()) {
+                    System.out.println("Entity: " + entity.getEntityId());
+                    System.out.println("Relevance: " + entity.getRelevanceScore());
+                    System.out.println("Confidence: " + entity.getConfidenceScore());
+                }
             }
 
             //Construct URL
@@ -115,6 +108,21 @@ public class Main {
                 if (questionEntities.getResponse().getEntities() != null) {
                     for(int i = 0; i < questionEntities.getResponse().getEntities().size(); i++){
                         webPage = urlCall(new URL(questionEntities.getResponse().getEntities().get(i).getWikiLink()));
+                        System.out.println(webPage);
+                        whichHigh = highestMatch(webPage, answerStringsConcated, synsets);
+                        if (whichHigh != -1) {
+                            String ansString = answerStringsConcated[whichHigh];
+                            System.out.println("The answer is probably \"" + ansString + "\"");
+                            ansFound = true;
+                            break;
+                        }
+                    }
+                    if(!ansFound) {
+                        System.out.println("Can't find an answer");
+                    }
+                } else if(questionEntities.getResponse().getTopics() != null){
+                    for(int i = 0; i < questionEntities.getResponse().getTopics().size(); i++){
+                        webPage = urlCall(new URL(questionEntities.getResponse().getTopics().get(i).getWikiLink()));
                         System.out.println(webPage);
                         whichHigh = highestMatch(webPage, answerStringsConcated, synsets);
                         if (whichHigh != -1) {
@@ -182,16 +190,18 @@ public class Main {
 
     private static URL constructURL(String questionString, ArrayList<Entity> entities, String[] answerStringsConcated) throws MalformedURLException {
         String url = "https://www.googleapis.com/customsearch/v1?q=";
-        for (Entity e : entities) {
-            url += e.getEntityId() + " ";
+        if(entities != null) {
+            for (Entity e : entities) {
+                url += e.getEntityId() + " ";
+            }
+            url = url.substring(0, url.length() - 1);
+        } else {
+            url += questionString.replaceAll(" ", "+").replaceAll("\"", "").split("which")[0] + "?";
         }
-        url = url.substring(0, url.length() - 1);
-        //+ questionString.replaceAll(" ", "+").replaceAll("\"", "").split("which")[0] + "?" +
         url += "&cx=016409237003735062340%3Anfsrbopx80k" +
                 //"&orTerms=" + answerStringsConcated[0].replaceAll(" ", "+") + "," + answerStringsConcated[1].replaceAll(" ", "+") + "," + answerStringsConcated[2].replaceAll(" ", "+") +
                 "&key=AIzaSyBMsx3u8GCtyYT1akAv0zRNiQuxuxQJt1I";
 
-        System.out.println(url.replaceAll(" ", "%20"));
         return new URL(url.replaceAll(" ", "%20"));
     }
 
