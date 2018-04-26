@@ -5,6 +5,7 @@ import com.textrazor.AnalysisException;
 import com.textrazor.TextRazor;
 import com.textrazor.annotations.AnalyzedText;
 import com.textrazor.annotations.Entity;
+import com.textrazor.annotations.Word;
 import edu.smu.tspell.wordnet.Synset;
 import edu.smu.tspell.wordnet.WordNetDatabase;
 import net.sourceforge.tess4j.ITesseract;
@@ -22,6 +23,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -45,7 +47,7 @@ public class Main {
     }
 
     private static void search() throws IOException, AWTException {
-        BufferedImage question = new Robot().createScreenCapture(new Rectangle(10, 300, 700, 975));
+        BufferedImage question = new Robot().createScreenCapture(new Rectangle(10, 300, 910, 900));
         ImageIO.write(question, "png", new File("question.png"));
 
         File questionImage = new File("question.png");
@@ -56,9 +58,7 @@ public class Main {
             String questionString = (fullString.split("\\?")[0] + "?").replaceAll("\n", " ");
             System.out.println("Question: " + questionString);
 
-
             String[] answerStrings = fullString.split("\\?")[1].split("\n");
-
             String[] answerStringsConcated = new String[3];
 
             int j = 0;
@@ -84,9 +84,13 @@ public class Main {
 
             client.addExtractor("topics");
             client.addExtractor("entities");
+            client.addExtractor("nounPhrases");
+            client.addExtractor("entailments");
+            client.addExtractor("properties");
 
             AnalyzedText questionEntities = client.analyze(questionString);
-            if(questionEntities.getResponse().getEntities() != null) {
+
+            if (questionEntities.getResponse().getEntities() != null) {
                 for (Entity entity : questionEntities.getResponse().getEntities()) {
                     System.out.println("Entity: " + entity.getEntityId());
                     System.out.println("Relevance: " + entity.getRelevanceScore());
@@ -95,7 +99,7 @@ public class Main {
             }
 
             //Construct URL
-            URL url = constructURL(questionString, (ArrayList<Entity>) questionEntities.getResponse().getEntities(), answerStringsConcated);
+            URL url = constructURLNormal(questionString, answerStringsConcated);
 
             //Call URL
             String webPage = urlCall(url);
@@ -107,25 +111,33 @@ public class Main {
                 String ansString = answerStringsConcated[whichHigh];
                 System.out.println("The answer is probably \"" + ansString + "\"");
             } else {
-                if (questionEntities.getResponse().getEntities() != null) {
-                    for(int i = 0; i < questionEntities.getResponse().getEntities().size(); i++){
-                        webPage = urlCall(new URL(questionEntities.getResponse().getEntities().get(i).getWikiLink()));
-                        System.out.println(webPage);
-                        whichHigh = highestMatch(webPage, answerStringsConcated, synsets);
-                        if (whichHigh != -1) {
-                            String ansString = answerStringsConcated[whichHigh];
-                            System.out.println("The answer is probably \"" + ansString + "\"");
-                            ansFound = true;
-                            break;
+                if ((url = constructURLEntity((ArrayList<Entity>) questionEntities.getResponse().getEntities(), (ArrayList<Word>) questionEntities.getResponse().getWords())) != null) {
+                    webPage = urlCall(url);
+                    whichHigh = highestMatch(webPage, answerStringsConcated, synsets);
+                    if (whichHigh != -1) {
+                        String ansString = answerStringsConcated[whichHigh];
+                        System.out.println("The answer is probably \"" + ansString + "\"");
+                    }
+                } else if (questionEntities.getResponse().getEntities() != null) {
+                    if (questionEntities.getResponse().getEntities().get(0).getRelevanceScore() > 0.0f) {
+                        for (int i = 0; i < questionEntities.getResponse().getEntities().size(); i++) {
+                            webPage = urlCall(new URL(questionEntities.getResponse().getEntities().get(i).getWikiLink()));
+                            System.out.println(webPage);
+                            whichHigh = highestMatch(webPage, answerStringsConcated, synsets);
+                            if (whichHigh != -1) {
+                                String ansString = answerStringsConcated[whichHigh];
+                                System.out.println("The answer is probably \"" + ansString + "\"");
+                                ansFound = true;
+                                break;
+                            }
                         }
                     }
-                    if(!ansFound) {
+                    if (!ansFound) {
                         System.out.println("Can't find an answer");
                     }
-                } else if(questionEntities.getResponse().getTopics() != null){
-                    for(int i = 0; i < questionEntities.getResponse().getTopics().size(); i++){
+                } else if (questionEntities.getResponse().getTopics() != null) {
+                    for (int i = 0; i < questionEntities.getResponse().getTopics().size(); i++) {
                         webPage = urlCall(new URL(questionEntities.getResponse().getTopics().get(i).getWikiLink()));
-                        System.out.println(webPage);
                         whichHigh = highestMatch(webPage, answerStringsConcated, synsets);
                         if (whichHigh != -1) {
                             String ansString = answerStringsConcated[whichHigh];
@@ -134,7 +146,7 @@ public class Main {
                             break;
                         }
                     }
-                    if(!ansFound) {
+                    if (!ansFound) {
                         System.out.println("Can't find an answer");
                     }
                 } else {
@@ -142,10 +154,10 @@ public class Main {
                 }
             }
 
-        } catch (TesseractException e) {
-            System.err.println(e.getMessage());
-        } catch (AnalysisException e) {
-            e.printStackTrace();
+        } catch (TesseractException e1) {
+            e1.printStackTrace();
+        } catch (AnalysisException e1) {
+            e1.printStackTrace();
         }
     }
 
@@ -154,27 +166,34 @@ public class Main {
         int highest = 0;
         int whichHigh = 0;
 
-        tempComparator = numMatches(inputSaved, answerStringsConcated[0]) + numMatches(inputSaved, answerStringsConcated[0].toLowerCase().substring(0, answerStringsConcated[0].length() - 1));
-        if (tempComparator >= highest) {
-            whichHigh = 0;
-            highest = tempComparator;
+        for (int i = 0; i < 3; i++) {
+            tempComparator = numMatches(inputSaved, answerStringsConcated[i]) + numMatches(inputSaved, answerStringsConcated[i].toLowerCase().substring(0, answerStringsConcated[i].length() - 1));
+            //Synonyms
+            for (Synset synset : synsets[i]) {
+                for (String s : synset.getWordForms()) {
+                    tempComparator += numMatches(inputSaved, s);
+                }
+            }
+            if (tempComparator >= highest) {
+                whichHigh = i;
+                highest = tempComparator;
+            }
         }
-        System.out.println("Answer 1 instances: " + tempComparator);
-
-        tempComparator = numMatches(inputSaved, answerStringsConcated[1]) + numMatches(inputSaved, answerStringsConcated[1].toLowerCase().substring(0, answerStringsConcated[1].length() - 1));
-        if (tempComparator >= highest) {
-            whichHigh = 1;
-            highest = tempComparator;
-        }
-        System.out.println("Answer 2 instances: " + tempComparator);
-
-        tempComparator = numMatches(inputSaved, answerStringsConcated[2]) + numMatches(inputSaved, answerStringsConcated[2].toLowerCase().substring(0, answerStringsConcated[2].length() - 1));
-        if (tempComparator >= highest) {
-            whichHigh = 2;
-        }
-        System.out.println("Answer 3 instances: " + tempComparator);
 
         if (highest == 0) {
+            for (int i = 0; i < 3; i++) {
+                if (answerStringsConcated[i].split(" ").length > 1) {
+                    String[] split = answerStringsConcated[i].split(" ");
+                    for (String aSplit : split) {
+                        tempComparator += numMatches(inputSaved, aSplit);
+                    }
+                }
+                if (tempComparator >= highest) {
+                    whichHigh = i;
+                    highest = tempComparator;
+                }
+            }
+            if(highest != 0) return whichHigh;
             return -1;
         }
         return whichHigh;
@@ -190,25 +209,42 @@ public class Main {
         return i;
     }
 
-    private static URL constructURL(String questionString, ArrayList<Entity> entities, String[] answerStringsConcated) throws MalformedURLException {
-        String url = "https://www.googleapis.com/customsearch/v1?q=";
-        if(entities != null) {
-            for (Entity e : entities) {
-                url += e.getEntityId() + " ";
-            }
-            url = url.substring(0, url.length() - 1);
-        } else {
-            url += questionString.replaceAll(" ", "+").replaceAll("\"", "").split("which")[0] + "?";
-        }
-        url += "&cx=016409237003735062340%3Anfsrbopx80k" +
+    private static URL constructURLNormal(String questionString, String[] answerStringsConcated) throws MalformedURLException {
+        String url = "https://www.googleapis.com/customsearch/v1?q=" + questionString.replaceAll(" ", "+").replaceAll("\"", "") +
+                "&as_oq=" + "%22" + answerStringsConcated[0].replaceAll(" ", "+") + "%22" + "+" + "%22" + answerStringsConcated[1].replaceAll(" ", "+") + "%22" + "+" + "%22" + answerStringsConcated[2].replaceAll(" ", "+") + "%22" +
                 //"&orTerms=" + answerStringsConcated[0].replaceAll(" ", "+") + "," + answerStringsConcated[1].replaceAll(" ", "+") + "," + answerStringsConcated[2].replaceAll(" ", "+") +
+                "&cx=016409237003735062340%3Anfsrbopx80k" +
                 "&key=AIzaSyBMsx3u8GCtyYT1akAv0zRNiQuxuxQJt1I";
 
         return new URL(url.replaceAll(" ", "%20"));
     }
 
+    private static URL constructURLEntity(ArrayList<Entity> entities, ArrayList<Word> words) throws MalformedURLException {
+        StringBuilder url = new StringBuilder("https://www.googleapis.com/customsearch/v1?q=");
+
+        if (entities != null) {
+            if (entities.get(0).getRelevanceScore() > 0.0f) {
+                for (Entity e : entities) {
+                    url.append(e.getEntityId()).append(" ");
+                }
+                url = new StringBuilder(url.substring(0, url.length() - 1));
+                if(words != null){
+                    for(Word w : words){
+                        if(w.getPartOfSpeech().equals("JJS")){
+                            url.append(w).append(" ");
+                        }
+                    }
+                }
+
+                System.out.println(url.toString().replaceAll(" ", "%20"));
+                return new URL(url.toString().replaceAll(" ", "%20"));
+            }
+        }
+        return null;
+    }
+
     private static String urlCall(URL url) throws IOException {
-        if(url.toString().contains("google")) {
+        if (url.toString().contains("google")) {
             URLConnection urlConnect = url.openConnection();
             urlConnect.addRequestProperty("User-Agent",
                     "Mozilla");
