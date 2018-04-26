@@ -1,10 +1,10 @@
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.textrazor.AnalysisException;
 import com.textrazor.TextRazor;
 import com.textrazor.annotations.AnalyzedText;
 import com.textrazor.annotations.Entity;
+import com.textrazor.annotations.Topic;
 import com.textrazor.annotations.Word;
 import edu.smu.tspell.wordnet.Synset;
 import edu.smu.tspell.wordnet.WordNetDatabase;
@@ -15,39 +15,32 @@ import net.sourceforge.tess4j.TesseractException;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Main {
-    private static WebClient webClient;
+    private static WebCalls webCalls;
 
     public static void main(String[] args) throws IOException, AWTException {
         // System.setProperty("jna.library.path", "32".equals(System.getProperty("sun.arch.data.model")) ? "lib/win32-x86" : "lib/win32-x86-64");
         System.setProperty("wordnet.database.dir", "C:\\Program Files (x86)\\WordNet\\2.1\\dict\\");
-        webClient = new WebClient(BrowserVersion.BEST_SUPPORTED);
+        WebCalls webCalls = new WebCalls();
         Scanner in = new Scanner(System.in);
         while (true) {
-            System.out.print("Spam to search");
-            if (in.hasNext()) {
-                System.out.println("Searching...");
-                search();
-                in.next();
-            }
+            System.out.print("Enter to search:");
+
+            in.nextLine();
+            System.out.println("Searching...");
+            search();
         }
     }
 
     private static void search() throws IOException, AWTException {
-        BufferedImage question = new Robot().createScreenCapture(new Rectangle(10, 300, 910, 900));
+        BufferedImage question = new Robot().createScreenCapture(new Rectangle(10, 400, 910, 800));
         ImageIO.write(question, "png", new File("question.png"));
 
         File questionImage = new File("question.png");
@@ -98,171 +91,46 @@ public class Main {
                 }
             }
 
-            //Construct URL
-            URL url = constructURLNormal(questionString, answerStringsConcated);
-
-            //Call URL
-            String webPage = urlCall(url);
-
             //Start count
-            boolean ansFound = false;
-            int whichHigh = highestMatch(webPage, answerStringsConcated, synsets);
-            if (whichHigh != -1) {
-                String ansString = answerStringsConcated[whichHigh];
-                System.out.println("The answer is probably \"" + ansString + "\"");
-            } else {
-                if ((url = constructURLEntity((ArrayList<Entity>) questionEntities.getResponse().getEntities(), (ArrayList<Word>) questionEntities.getResponse().getWords())) != null) {
-                    webPage = urlCall(url);
-                    whichHigh = highestMatch(webPage, answerStringsConcated, synsets);
-                    if (whichHigh != -1) {
-                        String ansString = answerStringsConcated[whichHigh];
-                        System.out.println("The answer is probably \"" + ansString + "\"");
-                    }
-                } else if (questionEntities.getResponse().getEntities() != null) {
-                    if (questionEntities.getResponse().getEntities().get(0).getRelevanceScore() > 0.0f) {
-                        for (int i = 0; i < questionEntities.getResponse().getEntities().size(); i++) {
-                            webPage = urlCall(new URL(questionEntities.getResponse().getEntities().get(i).getWikiLink()));
-                            System.out.println(webPage);
-                            whichHigh = highestMatch(webPage, answerStringsConcated, synsets);
-                            if (whichHigh != -1) {
-                                String ansString = answerStringsConcated[whichHigh];
-                                System.out.println("The answer is probably \"" + ansString + "\"");
-                                ansFound = true;
-                                break;
-                            }
+            //TODO impliment web calls in the search threads instead of calling static functions
+
+            Search[] searchThreads = {
+                    new QuestionGoogle(questionString, answerStringsConcated, synsets),
+                    new EntityGoogle((ArrayList<Entity>) questionEntities.getResponse().getEntities(), (ArrayList<Word>) questionEntities.getResponse().getWords(), answerStringsConcated, synsets, webCalls),
+                    new EntityWiki((ArrayList<Entity>) questionEntities.getResponse().getEntities(), answerStringsConcated, synsets, webCalls),
+                    new TopicWiki((ArrayList<Topic>) questionEntities.getResponse().getTopics(), answerStringsConcated, synsets, webCalls)};
+
+            boolean haveAnswered = false;
+            while (!haveAnswered) {
+                if (searchThreads[0].getFinished() && searchThreads[1].getFinished()
+                        && searchThreads[2].getFinished() && searchThreads[3].getFinished()) {
+                    HashMap<String, Integer> ansNums = new HashMap<String, Integer>();
+                    for (Search search : searchThreads) {
+                        if (search.getPossibleAnswer().equals(answerStringsConcated[0])) {
+                            ansNums.put(answerStringsConcated[0], (ansNums.containsKey(answerStringsConcated[0])) ? ansNums.get(answerStringsConcated[0])+1 : 1);
+                        } else if (search.getPossibleAnswer().equals(answerStringsConcated[1])) {
+                            ansNums.put(answerStringsConcated[1], (ansNums.containsKey(answerStringsConcated[0])) ? ansNums.get(answerStringsConcated[1])+1 : 1);
+                        } else if (search.getPossibleAnswer().equals(answerStringsConcated[2])) {
+                            ansNums.put(answerStringsConcated[2], (ansNums.containsKey(answerStringsConcated[0])) ? ansNums.get(answerStringsConcated[2])+1 : 1);
                         }
                     }
-                    if (!ansFound) {
-                        System.out.println("Can't find an answer");
-                    }
-                } else if (questionEntities.getResponse().getTopics() != null) {
-                    for (int i = 0; i < questionEntities.getResponse().getTopics().size(); i++) {
-                        webPage = urlCall(new URL(questionEntities.getResponse().getTopics().get(i).getWikiLink()));
-                        whichHigh = highestMatch(webPage, answerStringsConcated, synsets);
-                        if (whichHigh != -1) {
-                            String ansString = answerStringsConcated[whichHigh];
-                            System.out.println("The answer is probably \"" + ansString + "\"");
-                            ansFound = true;
-                            break;
+
+                    String answerProbably = null;
+                    int highestVote = 0;
+                    for (Map.Entry<String, Integer> entry : ansNums.entrySet()) {
+                        if (entry.getValue() > highestVote) {
+                            answerProbably = entry.getKey();
+                            highestVote = entry.getValue();
                         }
                     }
-                    if (!ansFound) {
-                        System.out.println("Can't find an answer");
-                    }
-                } else {
-                    System.out.println("Can't find an answer");
+
+                    System.out.println("By common consensus the highest answer might be \"" + answerProbably + "\"");
                 }
             }
-
         } catch (TesseractException e1) {
             e1.printStackTrace();
         } catch (AnalysisException e1) {
             e1.printStackTrace();
-        }
-    }
-
-    private static int highestMatch(String inputSaved, String[] answerStringsConcated, Synset[][] synsets) {
-        int tempComparator = 0;
-        int highest = 0;
-        int whichHigh = 0;
-
-        for (int i = 0; i < 3; i++) {
-            tempComparator = numMatches(inputSaved, answerStringsConcated[i]) + numMatches(inputSaved, answerStringsConcated[i].toLowerCase().substring(0, answerStringsConcated[i].length() - 1));
-            //Synonyms
-            for (Synset synset : synsets[i]) {
-                for (String s : synset.getWordForms()) {
-                    tempComparator += numMatches(inputSaved, s);
-                }
-            }
-            if (tempComparator >= highest) {
-                whichHigh = i;
-                highest = tempComparator;
-            }
-        }
-
-        if (highest == 0) {
-            for (int i = 0; i < 3; i++) {
-                if (answerStringsConcated[i].split(" ").length > 1) {
-                    String[] split = answerStringsConcated[i].split(" ");
-                    for (String aSplit : split) {
-                        tempComparator += numMatches(inputSaved, aSplit);
-                    }
-                }
-                if (tempComparator >= highest) {
-                    whichHigh = i;
-                    highest = tempComparator;
-                }
-            }
-            if(highest != 0) return whichHigh;
-            return -1;
-        }
-        return whichHigh;
-    }
-
-    private static int numMatches(String inputSaved, String answerToCheck) {
-        Pattern p = Pattern.compile(answerToCheck.toLowerCase());
-        Matcher m = p.matcher(inputSaved.toLowerCase());
-        int i = 0;
-        while (m.find()) {
-            i++;
-        }
-        return i;
-    }
-
-    private static URL constructURLNormal(String questionString, String[] answerStringsConcated) throws MalformedURLException {
-        String url = "https://www.googleapis.com/customsearch/v1?q=" + questionString.replaceAll(" ", "+").replaceAll("\"", "") +
-                "&as_oq=" + "%22" + answerStringsConcated[0].replaceAll(" ", "+") + "%22" + "+" + "%22" + answerStringsConcated[1].replaceAll(" ", "+") + "%22" + "+" + "%22" + answerStringsConcated[2].replaceAll(" ", "+") + "%22" +
-                //"&orTerms=" + answerStringsConcated[0].replaceAll(" ", "+") + "," + answerStringsConcated[1].replaceAll(" ", "+") + "," + answerStringsConcated[2].replaceAll(" ", "+") +
-                "&cx=016409237003735062340%3Anfsrbopx80k" +
-                "&key=AIzaSyBMsx3u8GCtyYT1akAv0zRNiQuxuxQJt1I";
-
-        return new URL(url.replaceAll(" ", "%20"));
-    }
-
-    private static URL constructURLEntity(ArrayList<Entity> entities, ArrayList<Word> words) throws MalformedURLException {
-        StringBuilder url = new StringBuilder("https://www.googleapis.com/customsearch/v1?q=");
-
-        if (entities != null) {
-            if (entities.get(0).getRelevanceScore() > 0.0f) {
-                for (Entity e : entities) {
-                    url.append(e.getEntityId()).append(" ");
-                }
-                url = new StringBuilder(url.substring(0, url.length() - 1));
-                if(words != null){
-                    for(Word w : words){
-                        if(w.getPartOfSpeech().equals("JJS")){
-                            url.append(w).append(" ");
-                        }
-                    }
-                }
-
-                System.out.println(url.toString().replaceAll(" ", "%20"));
-                return new URL(url.toString().replaceAll(" ", "%20"));
-            }
-        }
-        return null;
-    }
-
-    private static String urlCall(URL url) throws IOException {
-        if (url.toString().contains("google")) {
-            URLConnection urlConnect = url.openConnection();
-            urlConnect.addRequestProperty("User-Agent",
-                    "Mozilla");
-            BufferedReader in = new BufferedReader(new InputStreamReader(urlConnect.getInputStream()));
-
-            //Retrieve info
-            String inputLine;
-            StringBuilder inputSaved = new StringBuilder();
-            while ((inputLine = in.readLine()) != null)
-                inputSaved.append(inputLine);
-            in.close();
-            return inputSaved.toString();
-        } else {
-            webClient.getOptions().setCssEnabled(false);
-            webClient.getOptions().setJavaScriptEnabled(false);
-
-            HtmlPage page = webClient.getPage(url);
-            return page.asText();
         }
     }
 }
