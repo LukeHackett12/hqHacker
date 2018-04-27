@@ -12,7 +12,7 @@ public class QuestionGoogle extends Thread implements Search{
     private String possibleAnswer;
     private boolean finished;
 
-    QuestionGoogle(String question, String[] answerStringsConcated, Synset[][] synsets, WebCalls webCalls){
+    QuestionGoogle(String question, String[] answerStringsConcated, Synset[][] synsets){
         this.question = question;
         this.answerStringsConcated = answerStringsConcated;
         this.synsets = synsets;

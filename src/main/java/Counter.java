@@ -10,13 +10,12 @@ public class Counter {
         int whichHigh = 0;
 
         for (int i = 0; i < 3; i++) {
-            tempComparator = numMatches(inputSaved, answerStringsConcated[i]) + numMatches(inputSaved, answerStringsConcated[i].toLowerCase().substring(0, answerStringsConcated[i].length() - 1));
+            tempComparator = numMatches(inputSaved, answerStringsConcated[i]);// + numMatches(inputSaved, answerStringsConcated[i].toLowerCase().substring(0, answerStringsConcated[i].length() - 1));
             //Synonyms
-            for (Synset synset : synsets[i]) {
-                for (String s : synset.getWordForms()) {
-                    tempComparator += numMatches(inputSaved, s);
-                }
+            for (String s : synsets[i][1].getWordForms()) {
+                tempComparator += numMatches(inputSaved, s);
             }
+
             if (tempComparator >= highest) {
                 whichHigh = i;
                 highest = tempComparator;
@@ -51,7 +50,7 @@ public class Counter {
                 i++;
             }
             return i;
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return 0;

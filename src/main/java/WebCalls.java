@@ -13,11 +13,7 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 
 public class WebCalls {
-    private static WebClient webClient;
-
-    WebCalls(){
-        webClient = new WebClient(BrowserVersion.BEST_SUPPORTED);
-    }
+    private static WebClient webClient = new WebClient(BrowserVersion.BEST_SUPPORTED);
 
     public static URL constructURLNormal(String questionString, String[] answerStringsConcated) throws MalformedURLException {
         String url = "https://www.googleapis.com/customsearch/v1?q=" + questionString.replaceAll(" ", "+").replaceAll("\"", "") +
@@ -40,14 +36,14 @@ public class WebCalls {
                 url = new StringBuilder(url.substring(0, url.length() - 1));
                 if (words != null) {
                     for (Word w : words) {
-                        if (w.getPartOfSpeech().equals("JJS")) {
-                            url.append(w).append(" ");
+                        if (w.getPartOfSpeech().equals("JJS") || w.getPartOfSpeech().equals("NN")) {
+                            url.append(w.getLemma()).append(" ");
                         }
                     }
                 }
                 url.append("&cx=016409237003735062340%3Anfsrbopx80k&key=AIzaSyBMsx3u8GCtyYT1akAv0zRNiQuxuxQJt1I");
 
-                System.out.println(url.toString().replaceAll(" ", "%20"));
+                //System.out.println(url.toString().replaceAll(" ", "%20"));
                 return new URL(url.toString().replaceAll(" ", "%20"));
             }
         }

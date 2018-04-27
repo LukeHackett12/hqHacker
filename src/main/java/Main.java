@@ -2,7 +2,6 @@ import com.textrazor.AnalysisException;
 import com.textrazor.TextRazor;
 import com.textrazor.annotations.AnalyzedText;
 import com.textrazor.annotations.Entity;
-import com.textrazor.annotations.Topic;
 import com.textrazor.annotations.Word;
 import edu.smu.tspell.wordnet.Synset;
 import edu.smu.tspell.wordnet.WordNetDatabase;
@@ -21,12 +20,10 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
-    private static WebCalls webCalls;
 
     public static void main(String[] args) throws IOException, AWTException {
         // System.setProperty("jna.library.path", "32".equals(System.getProperty("sun.arch.data.model")) ? "lib/win32-x86" : "lib/win32-x86-64");
         System.setProperty("wordnet.database.dir", "C:\\Program Files (x86)\\WordNet\\2.1\\dict\\");
-        WebCalls webCalls = new WebCalls();
         Scanner in = new Scanner(System.in);
         while (true) {
             System.out.print("Enter to search:");
@@ -80,7 +77,7 @@ public class Main {
             client.addExtractor("properties");
 
             AnalyzedText questionEntities = client.analyze(questionString);
-
+/*
             if (questionEntities.getResponse().getEntities() != null) {
                 for (Entity entity : questionEntities.getResponse().getEntities()) {
                     System.out.println("Entity: " + entity.getEntityId());
@@ -88,14 +85,20 @@ public class Main {
                     System.out.println("Confidence: " + entity.getConfidenceScore());
                 }
             }
-
+            if (questionEntities.getResponse().getWords() != null) {
+                for (Word entity : questionEntities.getResponse().getWords()) {
+                    System.out.println("Speech part: " + entity.getPartOfSpeech());
+                    System.out.println("Stem: " + entity.getStem());
+                    System.out.println("Lemma: " + entity.getLemma());
+                }
+            }
+*/
             //Start count
-            //TODO impliment web calls in the search threads instead of calling static functions
 
             Search[] searchThreads = {
-                    new QuestionGoogle(questionString, answerStringsConcated, synsets, webCalls),
-                    new EntityGoogle((ArrayList<Entity>) questionEntities.getResponse().getEntities(), (ArrayList<Word>) questionEntities.getResponse().getWords(), answerStringsConcated, synsets, webCalls),
-                    new EntityWiki((ArrayList<Entity>) questionEntities.getResponse().getEntities(), answerStringsConcated, synsets, webCalls)};
+                    new QuestionGoogle(questionString, answerStringsConcated, synsets),
+                    new EntityGoogle((ArrayList<Entity>) questionEntities.getResponse().getEntities(), (ArrayList<Word>) questionEntities.getResponse().getWords(), answerStringsConcated, synsets),
+                    new EntityWiki((ArrayList<Entity>) questionEntities.getResponse().getEntities(), answerStringsConcated, synsets)};
             //new TopicWiki((ArrayList<Topic>) questionEntities.getResponse().getTopics(), answerStringsConcated, synsets, webCalls)};
 
             boolean haveAnswered = false;
@@ -127,7 +130,9 @@ public class Main {
                         }
                     }
 
-                    if(ansNums[0] != ansNums[1] && ansNums[0] != ansNums[2] && ansNums[1] != ansNums[2]) {
+                    if((ansNums[0] != ansNums[1] || ansNums[0] == 0 && ansNums[1] == 0)
+                            && (ansNums[0] != ansNums[2] || ansNums[0] == 0 && ansNums[2] == 0)
+                            && (ansNums[2] != ansNums[1] || ansNums[2] == 0 && ansNums[1] == 0)) {
                         String answerProbably = null;
                         int highestVote = 0;
                         HashMap<String, Integer> map = new HashMap<String, Integer>();

@@ -13,7 +13,7 @@ public class EntityWiki extends Thread implements Search{
     private String possibleAnswer;
     private boolean finished;
 
-    EntityWiki(ArrayList<Entity> entities, String[] answerStringsConcated, Synset[][] synsets, WebCalls webCalls) {
+    EntityWiki(ArrayList<Entity> entities, String[] answerStringsConcated, Synset[][] synsets) {
         this.entities = entities;
         this.answerStringsConcated = answerStringsConcated;
         this.synsets = synsets;

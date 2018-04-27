@@ -16,7 +16,7 @@ public class EntityGoogle extends Thread implements Search {
     private String possibleAnswer;
     private boolean finished;
 
-    EntityGoogle(ArrayList<Entity> entities, ArrayList<Word> words, String[] answerStringsConcated, Synset[][] synsets, WebCalls webCalls) {
+    EntityGoogle(ArrayList<Entity> entities, ArrayList<Word> words, String[] answerStringsConcated, Synset[][] synsets) {
         this.entities = entities;
         this.words = words;
         this.answerStringsConcated = answerStringsConcated;
