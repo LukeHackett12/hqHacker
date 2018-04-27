@@ -12,13 +12,15 @@ public class Counter {
         for (int i = 0; i < 3; i++) {
             tempComparator = numMatches(inputSaved, answerStringsConcated[i]);// + numMatches(inputSaved, answerStringsConcated[i].toLowerCase().substring(0, answerStringsConcated[i].length() - 1));
             //Synonyms
-            for (String s : synsets[i][1].getWordForms()) {
-                tempComparator += numMatches(inputSaved, s);
-            }
+            if(synsets[i][0] != null) {
+                for (String s : synsets[i][0].getWordForms()) {
+                    tempComparator += numMatches(inputSaved, s);
+                }
 
-            if (tempComparator >= highest) {
-                whichHigh = i;
-                highest = tempComparator;
+                if (tempComparator >= highest) {
+                    whichHigh = i;
+                    highest = tempComparator;
+                }
             }
         }
 

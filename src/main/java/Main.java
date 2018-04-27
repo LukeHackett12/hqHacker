@@ -20,10 +20,12 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
+    private static WebCalls webCalls;
 
     public static void main(String[] args) throws IOException, AWTException {
         // System.setProperty("jna.library.path", "32".equals(System.getProperty("sun.arch.data.model")) ? "lib/win32-x86" : "lib/win32-x86-64");
         System.setProperty("wordnet.database.dir", "C:\\Program Files (x86)\\WordNet\\2.1\\dict\\");
+        WebCalls webCalls = new WebCalls();
         Scanner in = new Scanner(System.in);
         while (true) {
             System.out.print("Enter to search:");
@@ -94,6 +96,7 @@ public class Main {
             }
 */
             //Start count
+            //TODO impliment web calls in the search threads instead of calling static functions
 
             Search[] searchThreads = {
                     new QuestionGoogle(questionString, answerStringsConcated, synsets),
