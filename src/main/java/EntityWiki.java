@@ -9,16 +9,16 @@ public class EntityWiki extends Thread implements Search{
     private ArrayList<Entity> entities;
     private String[] answerStringsConcated;
     private Synset[][] synsets;
-    private WebCalls webCalls;
 
     private String possibleAnswer;
     private boolean finished;
 
-    EntityWiki(ArrayList<Entity> entities, String[] answerStringsConcated, Synset[][] synsets) {
+    EntityWiki(ArrayList<Entity> entities, String[] answerStringsConcated, Synset[][] synsets, WebCalls webCalls) {
         this.entities = entities;
         this.answerStringsConcated = answerStringsConcated;
         this.synsets = synsets;
         finished = false;
+        possibleAnswer = "";
         start();
     }
 
@@ -32,7 +32,6 @@ public class EntityWiki extends Thread implements Search{
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    System.out.println(webPage);
                     int whichHigh = Counter.highestMatch(webPage, answerStringsConcated, synsets);
                     if (whichHigh != -1) {
                         possibleAnswer = answerStringsConcated[whichHigh];

@@ -10,16 +10,16 @@ public class TopicWiki extends Thread implements Search{
     //private ArrayList<Word> words;
     private String[] answerStringsConcated;
     private Synset[][] synsets;
-    private WebCalls webCalls;
 
     private String possibleAnswer;
     private boolean finished;
 
-    TopicWiki(ArrayList<Topic> topics, /* ArrayList<Word> words,*/ String[] answerStringsConcated, Synset[][] synsets) {
+    TopicWiki(ArrayList<Topic> topics, /* ArrayList<Word> words,*/ String[] answerStringsConcated, Synset[][] synsets, WebCalls webCalls) {
         this.topics = topics;
         //this.words = words;
         this.answerStringsConcated = answerStringsConcated;
         this.synsets = synsets;
+        possibleAnswer = "";
         finished = false;
         start();
     }

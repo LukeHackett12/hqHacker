@@ -1,5 +1,3 @@
-import com.gargoylesoftware.htmlunit.BrowserVersion;
-import com.gargoylesoftware.htmlunit.WebClient;
 import com.textrazor.AnalysisException;
 import com.textrazor.TextRazor;
 import com.textrazor.annotations.AnalyzedText;
@@ -95,36 +93,70 @@ public class Main {
             //TODO impliment web calls in the search threads instead of calling static functions
 
             Search[] searchThreads = {
-                    new QuestionGoogle(questionString, answerStringsConcated, synsets),
+                    new QuestionGoogle(questionString, answerStringsConcated, synsets, webCalls),
                     new EntityGoogle((ArrayList<Entity>) questionEntities.getResponse().getEntities(), (ArrayList<Word>) questionEntities.getResponse().getWords(), answerStringsConcated, synsets, webCalls),
-                    new EntityWiki((ArrayList<Entity>) questionEntities.getResponse().getEntities(), answerStringsConcated, synsets, webCalls),
-                    new TopicWiki((ArrayList<Topic>) questionEntities.getResponse().getTopics(), answerStringsConcated, synsets, webCalls)};
+                    new EntityWiki((ArrayList<Entity>) questionEntities.getResponse().getEntities(), answerStringsConcated, synsets, webCalls)};
+            //new TopicWiki((ArrayList<Topic>) questionEntities.getResponse().getTopics(), answerStringsConcated, synsets, webCalls)};
 
             boolean haveAnswered = false;
             while (!haveAnswered) {
-                if (searchThreads[0].getFinished() && searchThreads[1].getFinished()
-                        && searchThreads[2].getFinished() && searchThreads[3].getFinished()) {
-                    HashMap<String, Integer> ansNums = new HashMap<String, Integer>();
+                try {
+                    Thread.sleep(100);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                boolean done = true;
+
+                for (Search search : searchThreads) {
+                    if(!search.getFinished()) {
+                        done = false;
+                    }
+                }
+
+                if (done){//searchThreads[0].getFinished() && searchThreads[1].getFinished() && searchThreads[2].getFinished()) {//&& searchThreads[3].getFinished()) {
+
+                    int[] ansNums = new int[3];
                     for (Search search : searchThreads) {
                         if (search.getPossibleAnswer().equals(answerStringsConcated[0])) {
-                            ansNums.put(answerStringsConcated[0], (ansNums.containsKey(answerStringsConcated[0])) ? ansNums.get(answerStringsConcated[0])+1 : 1);
+                            ansNums[0]++;
                         } else if (search.getPossibleAnswer().equals(answerStringsConcated[1])) {
-                            ansNums.put(answerStringsConcated[1], (ansNums.containsKey(answerStringsConcated[0])) ? ansNums.get(answerStringsConcated[1])+1 : 1);
+                            ansNums[1]++;
                         } else if (search.getPossibleAnswer().equals(answerStringsConcated[2])) {
-                            ansNums.put(answerStringsConcated[2], (ansNums.containsKey(answerStringsConcated[0])) ? ansNums.get(answerStringsConcated[2])+1 : 1);
+                            ansNums[2]++;
                         }
                     }
 
-                    String answerProbably = null;
-                    int highestVote = 0;
-                    for (Map.Entry<String, Integer> entry : ansNums.entrySet()) {
-                        if (entry.getValue() > highestVote) {
-                            answerProbably = entry.getKey();
-                            highestVote = entry.getValue();
+                    if(ansNums[0] != ansNums[1] && ansNums[0] != ansNums[2] && ansNums[1] != ansNums[2]) {
+                        String answerProbably = null;
+                        int highestVote = 0;
+                        HashMap<String, Integer> map = new HashMap<String, Integer>();
+                        map.put(answerStringsConcated[0], ansNums[0]);
+                        map.put(answerStringsConcated[1], ansNums[1]);
+                        map.put(answerStringsConcated[2], ansNums[2]);
+                        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+                            if (entry.getValue() > highestVote) {
+                                answerProbably = entry.getKey();
+                                highestVote = entry.getValue();
+                            }
+                        }
+                        System.out.println("By common consensus the highest answer might be \"" + answerProbably + "\"");
+                        haveAnswered = true;
+                    }
+                    else {
+                        if(ansNums[0] == ansNums[1]){
+                            System.out.println("By common consensus the highest answer might be \"" + answerStringsConcated[0] + "\"" + " or \"" + answerStringsConcated[1] + "\"");
+                            haveAnswered = true;
+                        }
+                        else if(ansNums[0] == ansNums[2]){
+                            System.out.println("By common consensus the highest answer might be \"" + answerStringsConcated[0] + "\"" + " or \"" + answerStringsConcated[2] + "\"");
+                            haveAnswered = true;
+                        }
+                        else{
+                            System.out.println("By common consensus the highest answer might be \"" + answerStringsConcated[1] + "\"" + " or \"" + answerStringsConcated[2] + "\"");
+                            haveAnswered = true;
                         }
                     }
-
-                    System.out.println("By common consensus the highest answer might be \"" + answerProbably + "\"");
                 }
             }
         } catch (TesseractException e1) {

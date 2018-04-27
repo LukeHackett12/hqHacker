@@ -43,12 +43,17 @@ public class Counter {
     }
 
     private static int numMatches(String inputSaved, String answerToCheck) {
-        Pattern p = Pattern.compile(answerToCheck.toLowerCase());
-        Matcher m = p.matcher(inputSaved.toLowerCase());
-        int i = 0;
-        while (m.find()) {
-            i++;
+        try {
+            Pattern p = Pattern.compile(answerToCheck.toLowerCase());
+            Matcher m = p.matcher(inputSaved.toLowerCase());
+            int i = 0;
+            while (m.find()) {
+                i++;
+            }
+            return i;
+        } catch (Exception e){
+            e.printStackTrace();
         }
-        return i;
+        return 0;
     }
 }

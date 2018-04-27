@@ -45,6 +45,7 @@ public class WebCalls {
                         }
                     }
                 }
+                url.append("&cx=016409237003735062340%3Anfsrbopx80k&key=AIzaSyBMsx3u8GCtyYT1akAv0zRNiQuxuxQJt1I");
 
                 System.out.println(url.toString().replaceAll(" ", "%20"));
                 return new URL(url.toString().replaceAll(" ", "%20"));
@@ -55,24 +56,33 @@ public class WebCalls {
 
     public static String urlCall(URL url) throws IOException {
         if (url.toString().contains("google")) {
-            URLConnection urlConnect = url.openConnection();
-            urlConnect.addRequestProperty("User-Agent",
-                    "Mozilla");
-            BufferedReader in = new BufferedReader(new InputStreamReader(urlConnect.getInputStream()));
+            try {
+                URLConnection urlConnect = url.openConnection();
+                urlConnect.addRequestProperty("User-Agent",
+                        "Mozilla");
+                BufferedReader in = new BufferedReader(new InputStreamReader(urlConnect.getInputStream()));
 
-            //Retrieve info
-            String inputLine;
-            StringBuilder inputSaved = new StringBuilder();
-            while ((inputLine = in.readLine()) != null)
-                inputSaved.append(inputLine);
-            in.close();
-            return inputSaved.toString();
+                //Retrieve info
+                String inputLine;
+                StringBuilder inputSaved = new StringBuilder();
+                while ((inputLine = in.readLine()) != null)
+                    inputSaved.append(inputLine);
+                in.close();
+                return inputSaved.toString();
+            } catch (Exception e){
+                e.printStackTrace();
+            }
         } else {
             webClient.getOptions().setCssEnabled(false);
             webClient.getOptions().setJavaScriptEnabled(false);
 
-            HtmlPage page = webClient.getPage(url);
-            return page.asText();
+            try {
+                HtmlPage page = webClient.getPage(url);
+                return page.asText();
+            } catch (Exception e){
+                e.printStackTrace();
+            }
         }
+        return null;
     }
 }

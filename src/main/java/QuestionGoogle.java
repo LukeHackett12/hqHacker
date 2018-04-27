@@ -8,15 +8,15 @@ public class QuestionGoogle extends Thread implements Search{
     private String question;
     private String[] answerStringsConcated;
     private Synset[][] synsets;
-    private WebCalls webCalls;
 
     private String possibleAnswer;
     private boolean finished;
 
-    QuestionGoogle(String question, String[] answerStringsConcated, Synset[][] synsets){
+    QuestionGoogle(String question, String[] answerStringsConcated, Synset[][] synsets, WebCalls webCalls){
         this.question = question;
         this.answerStringsConcated = answerStringsConcated;
         this.synsets = synsets;
+        possibleAnswer = "";
         finished = false;
         start();
     }
@@ -33,7 +33,7 @@ public class QuestionGoogle extends Thread implements Search{
         try {
             webPage = WebCalls.urlCall(url);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("hops");
         }
         int whichHigh = Counter.highestMatch(webPage, answerStringsConcated, synsets);
         if (whichHigh != -1) {
