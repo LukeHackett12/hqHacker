@@ -96,7 +96,12 @@ public class Main {
             }
 */
             //Start count
-            //TODO impliment web calls in the search threads instead of calling static functions
+            //TODO impliment NOT
+            boolean not = false;
+            if(questionString.contains("NOT")){
+                not = true;
+                questionString = questionString.replaceAll("NOT", "");
+            }
 
             Search[] searchThreads = {
                     new QuestionGoogle(questionString, answerStringsConcated, synsets),
@@ -142,10 +147,20 @@ public class Main {
                         map.put(answerStringsConcated[0], ansNums[0]);
                         map.put(answerStringsConcated[1], ansNums[1]);
                         map.put(answerStringsConcated[2], ansNums[2]);
-                        for (Map.Entry<String, Integer> entry : map.entrySet()) {
-                            if (entry.getValue() > highestVote) {
-                                answerProbably = entry.getKey();
-                                highestVote = entry.getValue();
+                        if(!not) {
+                            for (Map.Entry<String, Integer> entry : map.entrySet()) {
+                                if (entry.getValue() > highestVote) {
+                                    answerProbably = entry.getKey();
+                                    highestVote = entry.getValue();
+                                }
+                            }
+                        }
+                        else{
+                            for (Map.Entry<String, Integer> entry : map.entrySet()) {
+                                if (entry.getValue() <= highestVote) {
+                                    answerProbably = entry.getKey();
+                                    highestVote = entry.getValue();
+                                }
                             }
                         }
                         System.out.println("By common consensus the highest answer might be \"" + answerProbably + "\"");
