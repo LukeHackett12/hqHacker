@@ -79,24 +79,8 @@ public class Main {
             client.addExtractor("properties");
 
             AnalyzedText questionEntities = client.analyze(questionString);
-/*
-            if (questionEntities.getResponse().getEntities() != null) {
-                for (Entity entity : questionEntities.getResponse().getEntities()) {
-                    System.out.println("Entity: " + entity.getEntityId());
-                    System.out.println("Relevance: " + entity.getRelevanceScore());
-                    System.out.println("Confidence: " + entity.getConfidenceScore());
-                }
-            }
-            if (questionEntities.getResponse().getWords() != null) {
-                for (Word entity : questionEntities.getResponse().getWords()) {
-                    System.out.println("Speech part: " + entity.getPartOfSpeech());
-                    System.out.println("Stem: " + entity.getStem());
-                    System.out.println("Lemma: " + entity.getLemma());
-                }
-            }
-*/
+
             //Start count
-            //TODO impliment NOT
             boolean not = false;
             if(questionString.contains("NOT")){
                 not = true;
@@ -104,7 +88,7 @@ public class Main {
             }
 
             Search[] searchThreads = {
-                    new QuestionGoogle(questionString, answerStringsConcated, synsets),
+                    new QuestionGoogle(questionString, answerStringsConcated, questionEntities, synsets),
                     new EntityGoogle((ArrayList<Entity>) questionEntities.getResponse().getEntities(), (ArrayList<Word>) questionEntities.getResponse().getWords(), answerStringsConcated, synsets),
                     new EntityWiki((ArrayList<Entity>) questionEntities.getResponse().getEntities(), answerStringsConcated, synsets)};
             //new TopicWiki((ArrayList<Topic>) questionEntities.getResponse().getTopics(), answerStringsConcated, synsets, webCalls)};
@@ -168,15 +152,15 @@ public class Main {
                     }
                     else {
                         if(ansNums[0] == ansNums[1]){
-                            System.out.println("By common consensus the highest answer might be \"" + answerStringsConcated[0] + "\"" + " or \"" + answerStringsConcated[1] + "\"");
+                            System.out.println("By common consensus the highest answer might be \"" + answerStringsConcated[0] + "\"" + "(Question) or \"" + answerStringsConcated[1] + "\"(Entity Google)");
                             haveAnswered = true;
                         }
                         else if(ansNums[0] == ansNums[2]){
-                            System.out.println("By common consensus the highest answer might be \"" + answerStringsConcated[0] + "\"" + " or \"" + answerStringsConcated[2] + "\"");
+                            System.out.println("By common consensus the highest answer might be \"" + answerStringsConcated[0] + "\"" + "(Question) or \"" + answerStringsConcated[2] + "\"(Entity Wiki)");
                             haveAnswered = true;
                         }
                         else{
-                            System.out.println("By common consensus the highest answer might be \"" + answerStringsConcated[1] + "\"" + " or \"" + answerStringsConcated[2] + "\"");
+                            System.out.println("By common consensus the highest answer might be \"" + answerStringsConcated[1] + "\"" + "(Entity Google) or \"" + answerStringsConcated[2] + "\"(Entity Wiki)");
                             haveAnswered = true;
                         }
                     }
