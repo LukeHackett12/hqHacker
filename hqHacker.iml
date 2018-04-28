@@ -76,5 +76,8 @@
     <orderEntry type="library" name="Maven: org.eclipse.jetty.websocket:websocket-api:9.2.18.v20160721" level="project" />
     <orderEntry type="library" name="Maven: junit:junit:4.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.opennlp:opennlp-tools:1.8.3" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-spellchecker:3.6.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-core:3.6.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-analyzers:3.6.2" level="project" />
   </component>
 </module>

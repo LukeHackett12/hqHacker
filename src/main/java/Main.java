@@ -8,6 +8,13 @@ import edu.smu.tspell.wordnet.WordNetDatabase;
 import net.sourceforge.tess4j.ITesseract;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
+import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.search.spell.Dictionary;
+import org.apache.lucene.search.spell.PlainTextDictionary;
+import org.apache.lucene.search.spell.SpellChecker;
+import org.apache.lucene.store.Directory;
+import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.util.Version;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -21,11 +28,13 @@ import java.util.Scanner;
 
 public class Main {
     private static WebCalls webCalls;
+    private static SpellChecker spellChecker;
 
     public static void main(String[] args) throws IOException, AWTException {
         // System.setProperty("jna.library.path", "32".equals(System.getProperty("sun.arch.data.model")) ? "lib/win32-x86" : "lib/win32-x86-64");
         System.setProperty("wordnet.database.dir", "C:\\Program Files (x86)\\WordNet\\2.1\\dict\\");
         WebCalls webCalls = new WebCalls();
+        spellChecker = loadDictionary();
         Scanner in = new Scanner(System.in);
         while (true) {
             System.out.print("Enter to search:");
@@ -55,6 +64,10 @@ public class Main {
             for (String answerString : answerStrings) {
                 if (!answerString.equals("")) {
                     if (j == 3) break;
+                    if(!spellChecker.exist(answerString)){
+                        String[] suggesetion = spellChecker.suggestSimilar(answerString, 1);
+                        answerString = suggesetion[0];
+                    }
                     answerStringsConcated[j] = answerString;
                     j++;
                 }
@@ -88,9 +101,9 @@ public class Main {
             }
 
             Search[] searchThreads = {
-                    new QuestionGoogle(questionString, answerStringsConcated, questionEntities, synsets),
+                    new QuestionGoogle(questionString, answerStringsConcated, questionEntities, synsets)};/*,
                     new EntityGoogle((ArrayList<Entity>) questionEntities.getResponse().getEntities(), (ArrayList<Word>) questionEntities.getResponse().getWords(), answerStringsConcated, synsets),
-                    new EntityWiki((ArrayList<Entity>) questionEntities.getResponse().getEntities(), answerStringsConcated, synsets)};
+                    new EntityWiki((ArrayList<Entity>) questionEntities.getResponse().getEntities(), answerStringsConcated, synsets)};//*/
             //new TopicWiki((ArrayList<Topic>) questionEntities.getResponse().getTopics(), answerStringsConcated, synsets, webCalls)};
 
             boolean haveAnswered = false;
@@ -171,5 +184,20 @@ public class Main {
         } catch (AnalysisException e1) {
             e1.printStackTrace();
         }
+    }
+
+    public static SpellChecker loadDictionary() {
+        try {
+            File dir = new File("C:\\spellchecker");
+            Directory directory = FSDirectory.open(dir);
+            SpellChecker spellChecker = new SpellChecker(directory);
+            Dictionary dictionary = new PlainTextDictionary(new File("C:\\Users\\lukeh\\Documents\\GitHub\\College\\1st year\\Java Programming\\Assignments\\Lewis Carrolls Word-Links Puzzle Game\\dictionary.txt"));
+            IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_30, null);
+            spellChecker.indexDictionary(dictionary, config, false);
+            return spellChecker;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
