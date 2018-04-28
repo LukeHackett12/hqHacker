@@ -12,19 +12,27 @@ public class Counter {
         for (int i = 0; i < 3; i++) {
             tempComparator = numMatches(inputSaved, answerStringsConcated[i]);// + numMatches(inputSaved, answerStringsConcated[i].toLowerCase().substring(0, answerStringsConcated[i].length() - 1));
             //Synonyms
-            if(synsets[i][0] != null) {
-                for (String s : synsets[i][0].getWordForms()) {
-                    tempComparator += numMatches(inputSaved, s);
-                }
+            try {
+                if (synsets != null) {
+                    if (synsets[i] != null) {
+                        for (Synset s : synsets[i]) {
+                            tempComparator += numMatches(inputSaved, s.getWordForms()[0]);
+                        }
 
-                if (tempComparator >= highest) {
-                    whichHigh = i;
-                    highest = tempComparator;
+                        if (tempComparator >= highest) {
+                            whichHigh = i;
+                            highest = tempComparator;
+                        }
+                    }
                 }
+            } catch (NullPointerException e) {
+                e.printStackTrace();
             }
         }
 
-        if (highest == 0) {
+        if (highest == 0)
+
+        {
             for (int i = 0; i < 3; i++) {
                 if (answerStringsConcated[i].split(" ").length > 1) {
                     String[] split = answerStringsConcated[i].split(" ");

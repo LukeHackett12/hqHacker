@@ -38,8 +38,6 @@ public class QuestionGoogle extends Thread implements Search{
         int whichHigh = Counter.highestMatch(webPage, answerStringsConcated, synsets);
         if (whichHigh != -1) {
             possibleAnswer = answerStringsConcated[whichHigh];
-            System.out.println("This is the plain old way");
-            System.out.println("The answer is probably \"" + possibleAnswer + "\"");
         }
         //Question google end
         finished = true;
