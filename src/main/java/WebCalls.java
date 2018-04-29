@@ -18,12 +18,7 @@ public class WebCalls {
     public static URL constructURLNormal(String questionString, String[] answerStringsConcated) throws MalformedURLException {
         String url = "https://www.googleapis.com/customsearch/v1?q=" + questionString.replaceAll(" ", "+").replaceAll("\"", "") +
                 "&as_oq=" + "%22" + answerStringsConcated[0].replaceAll(" ", "+") + "%22" + "+" + "%22" + answerStringsConcated[1].replaceAll(" ", "+") + "%22" + "+" + "%22" + answerStringsConcated[2].replaceAll(" ", "+") + "%22";
-
-        /*
-         if(questionString.toLowerCase().contains("which")){
-            url += "&orTerms=" + answerStringsConcated[0].replaceAll(" ", "+") + "," + answerStringsConcated[1].replaceAll(" ", "+") + "," + answerStringsConcated[2].replaceAll(" ", "+");
-        }
-        //*/
+        url += "&orTerms=" + answerStringsConcated[0].replaceAll(" ", "+") + "," + answerStringsConcated[1].replaceAll(" ", "+") + "," + answerStringsConcated[2].replaceAll(" ", "+");
 
         url += "&cx=016409237003735062340%3Anfsrbopx80k" +
                 "&key=AIzaSyBMsx3u8GCtyYT1akAv0zRNiQuxuxQJt1I";
