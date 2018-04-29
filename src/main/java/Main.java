@@ -21,6 +21,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +34,6 @@ public class Main {
     private static SpellChecker spellChecker;
 
     public static void main(String[] args) throws IOException, AWTException {
-        // System.setProperty("jna.library.path", "32".equals(System.getProperty("sun.arch.data.model")) ? "lib/win32-x86" : "lib/win32-x86-64");
         System.setProperty("wordnet.database.dir", "C:\\Program Files (x86)\\WordNet\\2.1\\dict\\");
         WebCalls webCalls = new WebCalls();
         spellChecker = loadDictionary();
@@ -66,7 +68,13 @@ public class Main {
                     if (j == 3) break;
                     if(!spellChecker.exist(answerString)){
                         String[] suggesetion = spellChecker.suggestSimilar(answerString, 1);
-                        answerString = suggesetion[0];
+                        try{
+                            answerString = suggesetion[0];
+                        } catch (NullPointerException e){
+                            System.err.println("Possible typo in answers");
+                        } catch (ArrayIndexOutOfBoundsException e){
+                            System.err.println("Possible typo in answers");
+                        }
                     }
                     answerStringsConcated[j] = answerString;
                     j++;
@@ -95,7 +103,7 @@ public class Main {
 
             //Start count
             boolean not = false;
-            if(questionString.contains("NOT")){
+            if(questionString.contains("NOT") && !questionString.contains("\"NOT\"")){
                 not = true;
                 questionString = questionString.replaceAll("NOT", "");
             }
@@ -122,7 +130,7 @@ public class Main {
                     }
                 }
 
-                if (done){//searchThreads[0].getFinished() && searchThreads[1].getFinished() && searchThreads[2].getFinished()) {//&& searchThreads[3].getFinished()) {
+                if (done){
 
                     int[] ansNums = new int[3];
                     for (Search search : searchThreads) {
@@ -191,7 +199,7 @@ public class Main {
             File dir = new File("C:\\spellchecker");
             Directory directory = FSDirectory.open(dir);
             SpellChecker spellChecker = new SpellChecker(directory);
-            Dictionary dictionary = new PlainTextDictionary(new File("C:\\Users\\lukeh\\Documents\\GitHub\\College\\1st year\\Java Programming\\Assignments\\Lewis Carrolls Word-Links Puzzle Game\\dictionary.txt"));
+            Dictionary dictionary = new PlainTextDictionary(new File("C:\\Users\\lukeh\\Documents\\words.txt"));
             IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_30, null);
             spellChecker.indexDictionary(dictionary, config, false);
             return spellChecker;
