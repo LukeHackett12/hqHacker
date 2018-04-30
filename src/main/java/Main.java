@@ -1,9 +1,6 @@
 import com.textrazor.AnalysisException;
 import com.textrazor.TextRazor;
 import com.textrazor.annotations.AnalyzedText;
-import edu.cmu.sphinx.api.Configuration;
-import edu.cmu.sphinx.api.SpeechResult;
-import edu.cmu.sphinx.api.StreamSpeechRecognizer;
 import edu.smu.tspell.wordnet.Synset;
 import edu.smu.tspell.wordnet.WordNetDatabase;
 import net.sourceforge.tess4j.ITesseract;
@@ -21,16 +18,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-<<<<<<< HEAD
-import java.io.InputStream;
-=======
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
->>>>>>> f5b66a693dd071a63c53990cb8c81f7f9507b96a
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -39,12 +27,8 @@ public class Main {
     private static WebCalls webCalls;
     private static SpellChecker spellChecker;
 
-<<<<<<< HEAD
     public static void main(String[] args) {
         // System.setProperty("jna.library.path", "32".equals(System.getProperty("sun.arch.data.model")) ? "lib/win32-x86" : "lib/win32-x86-64");
-=======
-    public static void main(String[] args) throws IOException, AWTException {
->>>>>>> f5b66a693dd071a63c53990cb8c81f7f9507b96a
         System.setProperty("wordnet.database.dir", "C:\\Program Files (x86)\\WordNet\\2.1\\dict\\");
         WebCalls webCalls = new WebCalls();
         spellChecker = loadDictionary();
@@ -118,15 +102,12 @@ public class Main {
 
             //Start count
             boolean not = false;
-<<<<<<< HEAD
             if (questionString.contains("NOT")) {
-=======
-            if(questionString.contains("NOT") && !questionString.contains("\"NOT\"")){
->>>>>>> f5b66a693dd071a63c53990cb8c81f7f9507b96a
-                not = true;
-                questionString = questionString.replaceAll("NOT", "");
+                if (questionString.contains("NOT") && !questionString.contains("\"NOT\"")) {
+                    not = true;
+                    questionString = questionString.replaceAll("NOT", "");
+                }
             }
-
             Search[] searchThreads = {
                     new QuestionGoogle(questionString, answerStringsConcated, questionEntities, synsets)};/*,
                     new EntityGoogle((ArrayList<Entity>) questionEntities.getResponse().getEntities(), (ArrayList<Word>) questionEntities.getResponse().getWords(), answerStringsConcated, synsets),
@@ -149,12 +130,7 @@ public class Main {
                     }
                 }
 
-<<<<<<< HEAD
-                if (done) {//searchThreads[0].getFinished() && searchThreads[1].getFinished() && searchThreads[2].getFinished()) {//&& searchThreads[3].getFinished()) {
-=======
-                if (done){
->>>>>>> f5b66a693dd071a63c53990cb8c81f7f9507b96a
-
+                if (done) {
                     int[] ansNums = new int[3];
                     for (Search search : searchThreads) {
                         if (search.getPossibleAnswer().equals(answerStringsConcated[0])) {

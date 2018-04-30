@@ -26,7 +26,7 @@ public class QuestionGoogle extends Thread implements Search {
     }
 
     public void run() {
-        //Question google start
+        //Questisdfon google start
         ///*
         URL url = null;
         try {

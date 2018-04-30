@@ -1,26 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="hqHacker:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="436091ed-2584-4c54-957c-a55969a0a7e4" name="Default" comment="">
-<<<<<<< HEAD
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__edu_cmu_sphinx_sphinx4_core_5prealpha_SNAPSHOT.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__edu_cmu_sphinx_sphinx4_data_5prealpha_SNAPSHOT.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_math3_3_2.xml" />
-=======
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
->>>>>>> f5b66a693dd071a63c53990cb8c81f7f9507b96a
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/hqHacker.iml" afterPath="$PROJECT_DIR$/hqHacker.iml" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
       <change beforePath="$PROJECT_DIR$/question.png" afterPath="$PROJECT_DIR$/question.png" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" afterPath="$PROJECT_DIR$/src/main/java/Main.java" />
-<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/src/main/java/QuestionGoogle.java" afterPath="$PROJECT_DIR$/src/main/java/QuestionGoogle.java" />
       <change beforePath="$PROJECT_DIR$/target/classes/Main.class" afterPath="$PROJECT_DIR$/target/classes/Main.class" />
-=======
-      <change beforePath="$PROJECT_DIR$/src/main/java/WebCalls.java" afterPath="$PROJECT_DIR$/src/main/java/WebCalls.java" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Main.class" afterPath="" />
->>>>>>> f5b66a693dd071a63c53990cb8c81f7f9507b96a
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -39,7 +30,7 @@
       <file leaf-file-name="TopicWiki.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/TopicWiki.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
+            <state relative-caret-position="561">
               <caret line="38" column="70" lean-forward="false" selection-start-line="38" selection-start-column="70" selection-end-line="38" selection-end-column="70" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -55,21 +46,10 @@
       <file leaf-file-name="QuestionGoogle.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/QuestionGoogle.java">
           <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
-            <state relative-caret-position="275">
-              <caret line="31" column="13" lean-forward="true" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
+            <state relative-caret-position="578">
+              <caret line="40" column="39" lean-forward="false" selection-start-line="40" selection-start-column="39" selection-end-line="40" selection-end-column="39" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1580#1581#0" expanded="true" />
-                <element signature="e#1617#1618#0" expanded="true" />
-=======
-            <state relative-caret-position="256">
-              <caret line="40" column="43" lean-forward="false" selection-start-line="40" selection-start-column="43" selection-end-line="40" selection-end-column="43" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#2463#2464#0" expanded="true" />
-                <element signature="e#2500#2501#0" expanded="true" />
->>>>>>> f5b66a693dd071a63c53990cb8c81f7f9507b96a
               </folding>
             </state>
           </provider>
@@ -122,13 +102,8 @@
       <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
-            <state relative-caret-position="739">
-              <caret line="89" column="41" lean-forward="false" selection-start-line="89" selection-start-column="41" selection-end-line="89" selection-end-column="41" />
-=======
-            <state relative-caret-position="722">
+            <state relative-caret-position="1156">
               <caret line="68" column="21" lean-forward="false" selection-start-line="68" selection-start-column="21" selection-end-line="68" selection-end-column="21" />
->>>>>>> f5b66a693dd071a63c53990cb8c81f7f9507b96a
               <folding />
             </state>
           </provider>
@@ -137,13 +112,8 @@
       <file leaf-file-name="WebCalls.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/WebCalls.java">
           <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
-            <state relative-caret-position="117">
-              <caret line="24" column="9" lean-forward="true" selection-start-line="24" selection-start-column="9" selection-end-line="24" selection-end-column="9" />
-=======
-            <state relative-caret-position="391">
+            <state relative-caret-position="187">
               <caret line="23" column="63" lean-forward="false" selection-start-line="23" selection-start-column="63" selection-end-line="23" selection-end-column="63" />
->>>>>>> f5b66a693dd071a63c53990cb8c81f7f9507b96a
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -154,18 +124,11 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
-            <state relative-caret-position="324">
-              <caret line="113" column="0" lean-forward="true" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
+            <state relative-caret-position="1055">
+              <caret line="203" column="17" lean-forward="false" selection-start-line="203" selection-start-column="17" selection-end-line="203" selection-end-column="17" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#6420#6437#0" expanded="true" />
-=======
-            <state relative-caret-position="405">
-              <caret line="200" column="68" lean-forward="true" selection-start-line="200" selection-start-column="68" selection-end-line="200" selection-end-column="68" />
-              <folding>
-                <element signature="imports" expanded="true" />
->>>>>>> f5b66a693dd071a63c53990cb8c81f7f9507b96a
+                <element signature="e#6542#6559#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -209,12 +172,8 @@
       <find>capo</find>
       <find>one</find>
       <find>spellChecker</find>
-<<<<<<< HEAD
-      <find>fi</find>
-=======
       <find>afri</find>
       <find>NOT</find>
->>>>>>> f5b66a693dd071a63c53990cb8c81f7f9507b96a
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -234,17 +193,10 @@
         <option value="$PROJECT_DIR$/src/main/java/TopicWiki.java" />
         <option value="$PROJECT_DIR$/src/main/java/EntityWiki.java" />
         <option value="$PROJECT_DIR$/src/main/java/EntityGoogle.java" />
-<<<<<<< HEAD
-        <option value="$PROJECT_DIR$/src/main/java/WebCalls.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Counter.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/QuestionGoogle.java" />
-=======
         <option value="$PROJECT_DIR$/src/main/java/QuestionGoogle.java" />
         <option value="$PROJECT_DIR$/src/main/java/Counter.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/WebCalls.java" />
->>>>>>> f5b66a693dd071a63c53990cb8c81f7f9507b96a
         <option value="$PROJECT_DIR$/src/main/java/Main.java" />
       </list>
     </option>
@@ -256,18 +208,10 @@
       </MavenImportingSettings>
     </option>
   </component>
-<<<<<<< HEAD
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="866" />
-    <option name="y" value="671" />
-    <option name="width" value="2345" />
-    <option name="height" value="1070" />
-=======
   <component name="ProjectFrameBounds">
-    <option name="x" value="1209" />
-    <option name="width" value="2144" />
+    <option name="x" value="1713" />
+    <option name="width" value="1734" />
     <option name="height" value="1407" />
->>>>>>> f5b66a693dd071a63c53990cb8c81f7f9507b96a
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -284,6 +228,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
@@ -316,12 +261,11 @@
       </pane>
       <pane id="Scope" />
       <pane id="Scratches" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$/jar_files" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.16996047" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="findjar.last.used.dir" value="$PROJECT_DIR$" />
@@ -461,43 +405,28 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-<<<<<<< HEAD
-    <frame x="-12" y="-12" width="3224" height="1754" extended-state="6" />
-    <editor active="true" />
-=======
-    <frame x="1209" y="0" width="2144" height="1407" extended-state="0" />
->>>>>>> f5b66a693dd071a63c53990cb8c81f7f9507b96a
+    <frame x="1713" y="0" width="1734" height="1407" extended-state="0" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934132" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32612056" sideWeight="0.38842976" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44899535" sideWeight="0.38842976" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5176314" sideWeight="0.3784689" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-<<<<<<< HEAD
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25989446" sideWeight="0.6215311" order="2" side_tool="false" content_ui="tabs" />
-=======
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4629057" sideWeight="0.6215311" order="2" side_tool="false" content_ui="tabs" />
->>>>>>> f5b66a693dd071a63c53990cb8c81f7f9507b96a
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934132" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4629057" sideWeight="0.6215311" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934132" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-<<<<<<< HEAD
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1284433" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Statistic" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32915568" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934132" sideWeight="0.49636695" order="1" side_tool="false" content_ui="tabs" />
-=======
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14849624" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
->>>>>>> f5b66a693dd071a63c53990cb8c81f7f9507b96a
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18393481" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2805255" sideWeight="0.47093552" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2805255" sideWeight="0.47093552" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -554,10 +483,7 @@
           <caret line="53" column="50" lean-forward="true" selection-start-line="53" selection-start-column="50" selection-end-line="53" selection-end-column="50" />
           <folding>
             <element signature="imports" expanded="true" />
-<<<<<<< HEAD
-            <element signature="e#6420#6437#0" expanded="true" />
-=======
->>>>>>> f5b66a693dd071a63c53990cb8c81f7f9507b96a
+            <element signature="e#6542#6559#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -576,10 +502,7 @@
           <caret line="23" column="25" lean-forward="false" selection-start-line="23" selection-start-column="25" selection-end-line="23" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="true" />
-<<<<<<< HEAD
-            <element signature="e#6420#6437#0" expanded="true" />
-=======
->>>>>>> f5b66a693dd071a63c53990cb8c81f7f9507b96a
+            <element signature="e#6542#6559#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -617,10 +540,7 @@
           <caret line="144" column="39" lean-forward="true" selection-start-line="144" selection-start-column="39" selection-end-line="144" selection-end-column="39" />
           <folding>
             <element signature="imports" expanded="true" />
-<<<<<<< HEAD
-            <element signature="e#6420#6437#0" expanded="true" />
-=======
->>>>>>> f5b66a693dd071a63c53990cb8c81f7f9507b96a
+            <element signature="e#6542#6559#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -644,10 +564,7 @@
           <caret line="57" column="53" lean-forward="true" selection-start-line="57" selection-start-column="53" selection-end-line="57" selection-end-column="53" />
           <folding>
             <element signature="imports" expanded="true" />
-<<<<<<< HEAD
-            <element signature="e#6420#6437#0" expanded="true" />
-=======
->>>>>>> f5b66a693dd071a63c53990cb8c81f7f9507b96a
+            <element signature="e#6542#6559#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -673,10 +590,7 @@
           <caret line="53" column="50" lean-forward="true" selection-start-line="53" selection-start-column="50" selection-end-line="53" selection-end-column="50" />
           <folding>
             <element signature="imports" expanded="true" />
-<<<<<<< HEAD
-            <element signature="e#6420#6437#0" expanded="true" />
-=======
->>>>>>> f5b66a693dd071a63c53990cb8c81f7f9507b96a
+            <element signature="e#6542#6559#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -695,10 +609,7 @@
           <caret line="23" column="25" lean-forward="false" selection-start-line="23" selection-start-column="25" selection-end-line="23" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="true" />
-<<<<<<< HEAD
-            <element signature="e#6420#6437#0" expanded="true" />
-=======
->>>>>>> f5b66a693dd071a63c53990cb8c81f7f9507b96a
+            <element signature="e#6542#6559#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -784,7 +695,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/TopicWiki.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
+        <state relative-caret-position="561">
           <caret line="38" column="70" lean-forward="false" selection-start-line="38" selection-start-column="70" selection-end-line="38" selection-end-column="70" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -796,16 +707,6 @@
         </state>
       </provider>
     </entry>
-<<<<<<< HEAD
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_151/src.zip!/java/security/AccessController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
-          <caret line="795" column="47" lean-forward="false" selection-start-line="795" selection-start-column="47" selection-end-line="795" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-=======
     <entry file="file://$PROJECT_DIR$/src/main/java/EntityGoogle.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="561">
@@ -821,7 +722,6 @@
       </provider>
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_151/src.zip!/java/security/AccessController.java" />
->>>>>>> f5b66a693dd071a63c53990cb8c81f7f9507b96a
     <entry file="file://$PROJECT_DIR$/src/main/java/Counter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
@@ -832,17 +732,10 @@
         </state>
       </provider>
     </entry>
-<<<<<<< HEAD
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/lucene/lucene-spellchecker/3.6.2/lucene-spellchecker-3.6.2.jar!/org/apache/lucene/search/spell/SpellChecker.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="347">
-          <caret line="251" column="0" lean-forward="false" selection-start-line="251" selection-start-column="0" selection-end-line="251" selection-end-column="0" />
-          <folding />
-=======
     <entry file="jar://$MAVEN_REPOSITORY$/org/apache/lucene/lucene-spellchecker/3.6.2/lucene-spellchecker-3.6.2.jar!/org/apache/lucene/search/spell/SpellChecker.class" />
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="722">
+        <state relative-caret-position="1156">
           <caret line="68" column="21" lean-forward="false" selection-start-line="68" selection-start-column="21" selection-end-line="68" selection-end-column="21" />
           <folding />
         </state>
@@ -850,12 +743,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/WebCalls.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
+        <state relative-caret-position="187">
           <caret line="23" column="63" lean-forward="false" selection-start-line="23" selection-start-column="63" selection-end-line="23" selection-end-column="63" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
->>>>>>> f5b66a693dd071a63c53990cb8c81f7f9507b96a
         </state>
       </provider>
     </entry>
@@ -864,75 +756,23 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/EntityGoogle.java">
-      <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
-        <state relative-caret-position="334">
-          <caret line="40" column="0" lean-forward="false" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1904#1905#0" expanded="true" />
-            <element signature="e#1941#1942#0" expanded="true" />
-            <element signature="e#1977#1978#0" expanded="true" />
-            <element signature="e#2008#2009#0" expanded="true" />
-=======
-        <state relative-caret-position="256">
-          <caret line="40" column="43" lean-forward="false" selection-start-line="40" selection-start-column="43" selection-end-line="40" selection-end-column="43" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2463#2464#0" expanded="true" />
-            <element signature="e#2500#2501#0" expanded="true" />
->>>>>>> f5b66a693dd071a63c53990cb8c81f7f9507b96a
-          </folding>
-        </state>
-      </provider>
-    </entry>
-<<<<<<< HEAD
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="739">
-          <caret line="89" column="41" lean-forward="false" selection-start-line="89" selection-start-column="41" selection-end-line="89" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/WebCalls.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="117">
-          <caret line="24" column="9" lean-forward="true" selection-start-line="24" selection-start-column="9" selection-end-line="24" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/QuestionGoogle.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="31" column="13" lean-forward="true" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
+        <state relative-caret-position="578">
+          <caret line="40" column="39" lean-forward="false" selection-start-line="40" selection-start-column="39" selection-end-line="40" selection-end-column="39" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1580#1581#0" expanded="true" />
-            <element signature="e#1617#1618#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="113" column="0" lean-forward="true" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
+        <state relative-caret-position="1055">
+          <caret line="203" column="17" lean-forward="false" selection-start-line="203" selection-start-column="17" selection-end-line="203" selection-end-column="17" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#6420#6437#0" expanded="true" />
-=======
-    <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="200" column="68" lean-forward="true" selection-start-line="200" selection-start-column="68" selection-end-line="200" selection-end-column="68" />
-          <folding>
-            <element signature="imports" expanded="true" />
->>>>>>> f5b66a693dd071a63c53990cb8c81f7f9507b96a
+            <element signature="e#6542#6559#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -943,10 +783,12 @@
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
+          <last-edited>hqHacker:jar</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.5" />
               </list>
             </option>
           </splitter-proportions>
